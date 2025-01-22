@@ -1,0 +1,40 @@
+CREATE DATABASE imdb_data;
+USE imdb_data;
+
+CREATE TABLE persons (
+   person_id INT PRIMARY KEY CHECK(person_id >= 0),
+   person_name VARCHAR(70) NOT NULL
+);
+
+CREATE TABLE movie (
+   movie_id INT PRIMARY KEY CHECK(movie_id >= 0),
+   title VARCHAR(100) NOT NULL,
+   year SMALLINT,
+   parental_guide VARCHAR(20),
+   runtime VARCHAR(10),
+   gross_us_ca_sale BIGINT
+);
+
+CREATE TABLE movie_directors (
+   movie_id INT REFERENCES movie(movie_id),
+   person_id INT REFERENCES persons(person_id),
+   PRIMARY KEY (movie_id, person_id)
+);
+
+CREATE TABLE movie_stars (
+   movie_id INT REFERENCES movie(movie_id),
+   person_id INT REFERENCES persons(person_id),
+   PRIMARY KEY (movie_id, person_id)
+);
+
+CREATE TABLE movie_writers (
+   movie_id INT REFERENCES movie(movie_id),
+   person_id INT REFERENCES persons(person_id),
+   PRIMARY KEY (movie_id, person_id)
+);
+
+CREATE TABLE movie_genres (
+   movie_id INT REFERENCES movie(movie_id),
+   genre_name VARCHAR(20),
+   PRIMARY KEY (movie_id, genre_name)
+);
